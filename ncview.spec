@@ -14,6 +14,7 @@ Patch0:         ncview-1.92e-Makefile.in.patch
 URL: http://meteora.ucsd.edu/~pierce/ncview_home_page.html
 BuildRequires:  netcdf-devel udunits-devel libnetpbm-devel
 BuildRequires:  X11-devel
+BuildRoot: %_tmppath/%name-%version-root
 
 %description
 Ncview is a visual browser for netCDF format files.  Typically you
