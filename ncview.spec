@@ -1,4 +1,4 @@
-%define version 1.93b
+%define version 1.93c
 %define release %mkrel 1
 
 Summary: Graphic for netCDF data file 
@@ -7,13 +7,14 @@ Version: %version
 Release: %release
 License: GPL
 Group: Sciences/Other
-Source: ftp://cirrus.ucsd.edu/pub/ncview/ncview-%{version}.tar.bz2
+Source: ftp://cirrus.ucsd.edu/pub/ncview/ncview-%{version}.tar.gz
 Patch1:         ncview-1.92e-netpbm.patch
 Patch0:         ncview-1.92e-Makefile.in.patch
 
 URL: http://meteora.ucsd.edu/~pierce/ncview_home_page.html
 BuildRequires:  netcdf-devel udunits-devel libnetpbm-devel
 BuildRequires:  X11-devel
+BuildRequires:  netcdf-static-devel
 BuildRoot: %_tmppath/%name-%version-root
 
 %description
@@ -30,7 +31,11 @@ color maps, invert the data, etc.
 
 %build
 %configure --with-netcdf-libdir=%{_libdir} --with-udunits_libdir=%{_libdir} \
-  --with-ppm_libdir=%{_libdir} --datadir=%{_datadir}/%{name}
+  --with-ppm_libdir=%{_libdir} --datadir=%{_datadir}/%{name} \
+  --x-includes=%{_includedir}/X11 \
+  --x-libraries=%{_libdir} \
+  --with-netcdf_incdir=%{_includedir}/netcdf-3
+
 %make 
 
 %install
