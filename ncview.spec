@@ -1,5 +1,5 @@
 %define version 1.93c
-%define release %mkrel 1
+%define release %mkrel 3
 
 Summary: Graphic for netCDF data file 
 Name: ncview
