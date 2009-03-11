@@ -1,15 +1,15 @@
-%define version 1.93c
-%define release %mkrel 3
+%define version 1.93g
+%define release %mkrel 1
 
 Summary: Graphic for netCDF data file 
 Name: ncview
 Version: %version
 Release: %release
-License: GPL
+License: GPLv3
 Group: Sciences/Other
 Source: ftp://cirrus.ucsd.edu/pub/ncview/ncview-%{version}.tar.gz
 Patch1:         ncview-1.92e-netpbm.patch
-Patch0:         ncview-1.92e-Makefile.in.patch
+#Patch0:         ncview-1.92e-Makefile.in.patch
 
 URL: http://meteora.ucsd.edu/~pierce/ncview_home_page.html
 BuildRequires:  netcdf-devel udunits-devel libnetpbm-devel
@@ -26,7 +26,7 @@ color maps, invert the data, etc.
 
 %prep
 %setup -q 
-%patch0 -p1
+#%patch0 -p1
 %patch1 -p0
 
 %build
@@ -39,20 +39,44 @@ color maps, invert the data, etc.
 %make 
 
 %install
-rm -rf $RPM_BUILD_ROOT
-export XAPPLRESDIR="${RPM_BUILD_ROOT}%{_sysconfdir}/X11/app-defaults"
-mkdir -p "${RPM_BUILD_ROOT}%{_sysconfdir}/X11/app-defaults"
-%makeinstall NCVIEW_LIB_DIR=${RPM_BUILD_ROOT}%{_datadir}/ncview BINDIR=${RPM_BUILD_ROOT}%{_bindir} MANDIR=${RPM_BUILD_ROOT}%{_mandir}/man1
-chmod 644 ${RPM_BUILD_ROOT}%{_sysconfdir}/X11/app-defaults/Ncview
-chmod 644 ${RPM_BUILD_ROOT}%{_mandir}/man1/*
+rm -rf %{buildroot}
+export XAPPLRESDIR="%{buildroot}%{_sysconfdir}/X11/app-defaults"
+mkdir -p "%{buildroot}%{_sysconfdir}/X11/app-defaults"
+%makeinstall NCVIEW_LIB_DIR=%{buildroot}%{_datadir}/ncview BINDIR=%{buildroot}%{_bindir} MANDIR=%{buildroot}%{_mandir}/man1
+chmod 644 %{buildroot}%{_sysconfdir}/X11/app-defaults/Ncview
+chmod 644 %{buildroot}%{_mandir}/man1/*
+
+# Menu
+mkdir -p %{buildroot}%{_datadir}/applications/
+cat << EOF > %buildroot%{_datadir}/applications/mandriva-%{name}.desktop
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Exec=%{_bindir}/%{name}
+Icon=%{name}
+Categories=Science;Other;
+Name=%{name}
+Comment=Graphic for netCDF data file
+EOF
+
+%if %mdkversion < 200900
+%post
+%{update_menus}
+%endif
+
+%if %mdkversion < 200900
+%postun
+%clean_menus
+%endif
 
 %clean
-[ $RPM_BUILD_ROOT != '/' ] && rm -fr $RPM_BUILD_ROOT
+[ %{buildroot} != '/' ] && rm -fr %{buildroot}
 
 %files
 %defattr(-, root, root, -)
 %doc COPYING INSTALL README
 %{_bindir}/*
+%{_datadir}/applications/mandriva-%{name}.desktop
 %config(noreplace) %{_sysconfdir}/X11/app-defaults/*
 %{_mandir}/man1/*
 
