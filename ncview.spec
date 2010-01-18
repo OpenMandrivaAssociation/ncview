@@ -8,7 +8,8 @@ Release: %release
 License: GPLv3
 Group: Sciences/Other
 Source: ftp://cirrus.ucsd.edu/pub/ncview/ncview-%{version}.tar.gz
-Patch1:         ncview-1.92e-netpbm.patch
+Patch0:	ncview-1.93g-as-needed.patch
+Patch1: ncview-1.92e-netpbm.patch
 URL: http://meteora.ucsd.edu/~pierce/ncview_home_page.html
 BuildRequires:  netcdf-devel 
 BuildRequires:	udunits-devel 
@@ -25,7 +26,8 @@ various dimensions, take a look at the actual data values, change
 color maps, invert the data, etc.
 
 %prep
-%setup -q 
+%setup -q
+%patch0 -p0
 %patch1 -p0
 
 %build
