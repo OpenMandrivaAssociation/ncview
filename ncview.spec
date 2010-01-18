@@ -9,10 +9,10 @@ License: GPLv3
 Group: Sciences/Other
 Source: ftp://cirrus.ucsd.edu/pub/ncview/ncview-%{version}.tar.gz
 Patch1:         ncview-1.92e-netpbm.patch
-#Patch0:         ncview-1.92e-Makefile.in.patch
-
 URL: http://meteora.ucsd.edu/~pierce/ncview_home_page.html
-BuildRequires:  netcdf-devel udunits-devel libnetpbm-devel
+BuildRequires:  netcdf-devel 
+BuildRequires:	udunits-devel 
+BuildRequires:	libnetpbm-devel
 BuildRequires:  X11-devel
 BuildRequires:  netcdf-static-devel
 BuildRoot: %_tmppath/%name-%version-root
@@ -26,15 +26,17 @@ color maps, invert the data, etc.
 
 %prep
 %setup -q 
-#%patch0 -p1
 %patch1 -p0
 
 %build
-%configure --with-netcdf-libdir=%{_libdir} --with-udunits_libdir=%{_libdir} \
-  --with-ppm_libdir=%{_libdir} --datadir=%{_datadir}/%{name} \
+# Makefile doesn't actually respect --with-ppm_incdir
+CFLAGS="%optflags -I/usr/include/netpbm"  
+
+%configure2_5x --with-netcdf-libdir=%{_libdir} --with-udunits_libdir=%{_libdir} \
+  --with-ppm_libdir=%{_libdir} --with-ppm_incdir=%{_includedir}/netpbm \
+  --datadir=%{_datadir}/%{name} \
   --x-includes=%{_includedir}/X11 \
-  --x-libraries=%{_libdir} \
-  --with-netcdf_incdir=%{_includedir}/netcdf-3
+  --x-libraries=%{_libdir}
 
 %make 
 
