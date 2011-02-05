@@ -1,5 +1,5 @@
 %define version 1.93g
-%define release %mkrel 3
+%define release %mkrel 4
 
 Summary: Graphic for netCDF data file 
 Name: ncview
@@ -10,12 +10,14 @@ Group: Sciences/Other
 Source: ftp://cirrus.ucsd.edu/pub/ncview/ncview-%{version}.tar.gz
 Patch0:	ncview-1.93g-as-needed.patch
 Patch1: ncview-1.92e-netpbm.patch
+Patch2: ncview-1.93g-libname.patch
 URL: http://meteora.ucsd.edu/~pierce/ncview_home_page.html
 BuildRequires:  netcdf-devel 
-BuildRequires:	udunits-devel 
 BuildRequires:	libnetpbm-devel
-BuildRequires:  X11-devel
-BuildRequires:  netcdf-static-devel
+BuildRequires:  libx11-devel
+BuildRequires:	libxaw-devel
+BuildRequires:	libxt-devel
+BuildRequires:	udunits-devel
 BuildRoot: %_tmppath/%name-%version-root
 
 %description
@@ -29,18 +31,16 @@ color maps, invert the data, etc.
 %setup -q
 %patch0 -p0
 %patch1 -p0
+%patch2 -p0
 
 %build
 # Makefile doesn't actually respect --with-ppm_incdir
 CFLAGS="%optflags -I/usr/include/netpbm"  
-
 %configure2_5x --with-netcdf-libdir=%{_libdir} --with-udunits_libdir=%{_libdir} \
   --with-ppm_libdir=%{_libdir} --with-ppm_incdir=%{_includedir}/netpbm \
-  --datadir=%{_datadir}/%{name} \
-  --x-includes=%{_includedir}/X11 \
-  --x-libraries=%{_libdir}
+  --datadir=%{_datadir}/%{name} --with-netcdf_libname=libnetcdf.so
 
-%make 
+%make  LDOPTIONS="%ldflags"
 
 %install
 rm -rf %{buildroot}
