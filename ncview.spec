@@ -1,5 +1,6 @@
-%define version 1.93g
-%define release %mkrel 4
+%define version 2.0
+%define pre beta4
+%define release %mkrel -c %pre 1
 
 Summary: Graphic for netCDF data file 
 Name: ncview
@@ -7,17 +8,16 @@ Version: %version
 Release: %release
 License: GPLv3
 Group: Sciences/Other
-Source: ftp://cirrus.ucsd.edu/pub/ncview/ncview-%{version}.tar.gz
-Patch0:	ncview-1.93g-as-needed.patch
-Patch1: ncview-1.92e-netpbm.patch
-Patch2: ncview-1.93g-libname.patch
+Source: ftp://cirrus.ucsd.edu/pub/ncview/ncview-%{version}%{?pre}.tar.gz
+Patch3: ncview-2.0beta4-sharedlibs.patch
 URL: http://meteora.ucsd.edu/~pierce/ncview_home_page.html
 BuildRequires:  netcdf-devel 
 BuildRequires:	libnetpbm-devel
 BuildRequires:  libx11-devel
 BuildRequires:	libxaw-devel
 BuildRequires:	libxt-devel
-BuildRequires:	udunits-devel
+BuildRequires:	udunits2-devel
+BuildRequires:	expat-devel
 BuildRoot: %_tmppath/%name-%version-root
 
 %description
@@ -28,27 +28,19 @@ various dimensions, take a look at the actual data values, change
 color maps, invert the data, etc.
 
 %prep
-%setup -q
-%patch0 -p0
-%patch1 -p0
-%patch2 -p0
+%setup -qn %{name}-%{version}%{?pre}
+%patch3 -p0 -b .shared
 
 %build
-# Makefile doesn't actually respect --with-ppm_incdir
-CFLAGS="%optflags -I/usr/include/netpbm"  
-%configure2_5x --with-netcdf-libdir=%{_libdir} --with-udunits_libdir=%{_libdir} \
-  --with-ppm_libdir=%{_libdir} --with-ppm_incdir=%{_includedir}/netpbm \
-  --datadir=%{_datadir}/%{name} --with-netcdf_libname=libnetcdf.so
-
-%make  LDOPTIONS="%ldflags"
+autoreconf -fi -Im4macros
+%configure2_5x --with-ppm_libdir=%{_libdir} --with-udunits2_libdir=%{_libdir} \
+	--with-udunits2_incdir=%{_includedir}/udunits2 \
+	--with-ppm_libdir=%{_libdir} --with-ppm_incdir=%{_includedir}/netpbm
+%make
 
 %install
 rm -rf %{buildroot}
-export XAPPLRESDIR="%{buildroot}%{_sysconfdir}/X11/app-defaults"
-mkdir -p "%{buildroot}%{_sysconfdir}/X11/app-defaults"
-%makeinstall NCVIEW_LIB_DIR=%{buildroot}%{_datadir}/ncview BINDIR=%{buildroot}%{_bindir} MANDIR=%{buildroot}%{_mandir}/man1
-chmod 644 %{buildroot}%{_sysconfdir}/X11/app-defaults/Ncview
-chmod 644 %{buildroot}%{_mandir}/man1/*
+%makeinstall_std
 
 # Menu
 mkdir -p %{buildroot}%{_datadir}/applications/
@@ -81,6 +73,4 @@ EOF
 %doc COPYING INSTALL README
 %{_bindir}/*
 %{_datadir}/applications/mandriva-%{name}.desktop
-%config(noreplace) %{_sysconfdir}/X11/app-defaults/*
-%{_mandir}/man1/*
 
