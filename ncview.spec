@@ -1,6 +1,6 @@
 %define version 2.0
 %define pre beta4
-%define release %mkrel -c %pre 1
+%define release %mkrel -c %pre 2
 
 Summary: Graphic for netCDF data file 
 Name: ncview
