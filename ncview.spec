@@ -1,24 +1,21 @@
-%define version 2.0
-%define pre beta4
-%define release %mkrel -c %pre 2
-
-Summary: Graphic for netCDF data file 
-Name: ncview
-Version: %version
-Release: %release
-License: GPLv3
-Group: Sciences/Other
-Source: ftp://cirrus.ucsd.edu/pub/ncview/ncview-%{version}%{?pre}.tar.gz
-Patch3: ncview-2.0beta4-sharedlibs.patch
-URL: http://meteora.ucsd.edu/~pierce/ncview_home_page.html
-BuildRequires:  netcdf-devel 
+Summary:	Graphic for netCDF data file
+Name:		ncview
+Version:	2.1.1
+Release:	%mkrel 1
+License:	GPLv3
+Group:		Sciences/Other
+Source:		ftp://cirrus.ucsd.edu/pub/ncview/ncview-%{version}.tar.gz
+Patch0:		ncview-2.1-link.patch
+URL:		http://meteora.ucsd.edu/~pierce/ncview_home_page.html
+BuildRequires:	netcdf-devel
 BuildRequires:	libnetpbm-devel
-BuildRequires:  libx11-devel
+BuildRequires:	libx11-devel
 BuildRequires:	libxaw-devel
 BuildRequires:	libxt-devel
 BuildRequires:	udunits2-devel
 BuildRequires:	expat-devel
-BuildRoot: %_tmppath/%name-%version-root
+BuildRequires:	png-devel
+BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
 Ncview is a visual browser for netCDF format files.  Typically you
@@ -28,8 +25,8 @@ various dimensions, take a look at the actual data values, change
 color maps, invert the data, etc.
 
 %prep
-%setup -qn %{name}-%{version}%{?pre}
-%patch3 -p0 -b .shared
+%setup -q
+%patch0 -p0 -b .link
 
 %build
 autoreconf -fi -Im4macros
@@ -44,13 +41,13 @@ rm -rf %{buildroot}
 
 # Menu
 mkdir -p %{buildroot}%{_datadir}/applications/
-cat << EOF > %buildroot%{_datadir}/applications/mandriva-%{name}.desktop
+cat << EOF > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop
 [Desktop Entry]
 Encoding=UTF-8
 Type=Application
 Exec=%{_bindir}/%{name}
 Icon=%{name}
-Categories=Science;Other;
+Categories=Science;Education;
 Name=%{name}
 Comment=Graphic for netCDF data file
 EOF
