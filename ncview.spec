@@ -8,10 +8,10 @@ Source:		ftp://cirrus.ucsd.edu/pub/ncview/ncview-%{version}.tar.gz
 Patch0:		ncview-2.1-link.patch
 URL:		http://meteora.ucsd.edu/~pierce/ncview_home_page.html
 BuildRequires:	netcdf-devel
-BuildRequires:	libnetpbm-devel
-BuildRequires:	libx11-devel
-BuildRequires:	libxaw-devel
-BuildRequires:	libxt-devel
+BuildRequires:	netpbm-devel = 10.57.01-2
+BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(xaw7)
+BuildRequires:	pkgconfig(xt)
 BuildRequires:	udunits2-devel
 BuildRequires:	expat-devel
 BuildRequires:	png-devel
