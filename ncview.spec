@@ -1,7 +1,7 @@
 Summary:	Graphic for netCDF data file
 Name:		ncview
 Version:	2.1.1
-Release:	%mkrel 1
+Release:	2
 License:	GPLv3
 Group:		Sciences/Other
 Source:		ftp://cirrus.ucsd.edu/pub/ncview/ncview-%{version}.tar.gz
@@ -15,7 +15,6 @@ BuildRequires:	pkgconfig(xt)
 BuildRequires:	udunits2-devel
 BuildRequires:	expat-devel
 BuildRequires:	png-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
 Ncview is a visual browser for netCDF format files.  Typically you
