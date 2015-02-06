@@ -1,7 +1,7 @@
 Summary:	Graphic for netCDF data file
 Name:		ncview
 Version:	2.1.1
-Release:	2
+Release:	3
 License:	GPLv3
 Group:		Sciences/Other
 Source:		ftp://cirrus.ucsd.edu/pub/ncview/ncview-%{version}.tar.gz
