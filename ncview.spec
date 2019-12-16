@@ -8,7 +8,7 @@ Source:		ftp://cirrus.ucsd.edu/pub/ncview/ncview-%{version}.tar.gz
 Patch0:		ncview-2.1-link.patch
 URL:		http://meteora.ucsd.edu/~pierce/ncview_home_page.html
 BuildRequires:	netcdf-devel
-BuildRequires:	netpbm-devel = 10.57.01-2
+BuildRequires:	netpbm-devel
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xaw7)
 BuildRequires:	pkgconfig(xt)
