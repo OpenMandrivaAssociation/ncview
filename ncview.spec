@@ -1,7 +1,7 @@
 Summary:	Graphic for netCDF data file
 Name:		ncview
-Version:	2.1.1
-Release:	3
+Version:	2.1.8
+Release:	1
 License:	GPLv3
 Group:		Sciences/Other
 Source:		ftp://cirrus.ucsd.edu/pub/ncview/ncview-%{version}.tar.gz
@@ -133,7 +133,7 @@ EOF
 + 08/09/06 20:15:11 (55121)
 Import ncview
 
-* Fri Sep 30 2005 Nicolas Lécureuil <neoclust@mandriva.org> 1.92e-2mdk
+* Fri Sep 30 2005 Nicolas LÃ©cureuil <neoclust@mandriva.org> 1.92e-2mdk
 - Add X11-devel as BuildRequires for X11/Core.h
 
 * Thu Sep 29 2005 Olivier Thauvin <nanardon@mandriva.org> 1.92e-1mdk
