@@ -5,7 +5,6 @@ Release:	1
 License:	GPLv3
 Group:		Sciences/Other
 Source:		ftp://cirrus.ucsd.edu/pub/ncview/ncview-%{version}.tar.gz
-Patch0:		ncview-2.1-link.patch
 URL:		http://meteora.ucsd.edu/~pierce/ncview_home_page.html
 BuildRequires:	netcdf-devel
 BuildRequires:	netpbm-devel
@@ -25,18 +24,17 @@ color maps, invert the data, etc.
 
 %prep
 %setup -q
-%patch0 -p0 -b .link
 
 %build
 autoreconf -fi -Im4macros
 %configure2_5x --with-ppm_libdir=%{_libdir} --with-udunits2_libdir=%{_libdir} \
 	--with-udunits2_incdir=%{_includedir}/udunits2 \
 	--with-ppm_libdir=%{_libdir} --with-ppm_incdir=%{_includedir}/netpbm
-%make
+%make_build
 
 %install
 rm -rf %{buildroot}
-%makeinstall_std
+%make_install
 
 # Menu
 mkdir -p %{buildroot}%{_datadir}/applications/
