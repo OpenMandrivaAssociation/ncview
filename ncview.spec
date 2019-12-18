@@ -6,14 +6,14 @@ License:	GPLv3
 Group:		Sciences/Other
 Source:		ftp://cirrus.ucsd.edu/pub/ncview/ncview-%{version}.tar.gz
 URL:		http://meteora.ucsd.edu/~pierce/ncview_home_page.html
-BuildRequires:	netcdf-devel
+BuildRequires:  pkgconfig(netcdf)
 BuildRequires:	netpbm-devel
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xaw7)
 BuildRequires:	pkgconfig(xt)
 BuildRequires:	udunits2-devel
-BuildRequires:	expat-devel
-BuildRequires:	png-devel
+BuildRequires:  pkgconfig(expat)
+BuildRequires:  pkgconfig(libpng)
 
 %description
 Ncview is a visual browser for netCDF format files.  Typically you
@@ -27,9 +27,8 @@ color maps, invert the data, etc.
 
 %build
 autoreconf -fi -Im4macros
-%configure2_5x --with-ppm_libdir=%{_libdir} --with-udunits2_libdir=%{_libdir} \
-	--with-udunits2_incdir=%{_includedir}/udunits2 \
-	--with-ppm_libdir=%{_libdir} --with-ppm_incdir=%{_includedir}/netpbm
+%configure2_5x \
+    --with-udunits2_incdir=%{_includedir}/udunits2
 %make_build
 
 %install
