@@ -5,7 +5,7 @@ Release:	1
 License:	GPLv3
 Group:		Sciences/Other
 Source:		ftp://cirrus.ucsd.edu/pub/ncview/ncview-%{version}.tar.gz
-URL:		http://meteora.ucsd.edu/~pierce/ncview_home_page.html
+URL:		https://meteora.ucsd.edu/~pierce/ncview_home_page.html
 BuildRequires:  pkgconfig(netcdf)
 BuildRequires:	netpbm-devel
 BuildRequires:	pkgconfig(x11)
